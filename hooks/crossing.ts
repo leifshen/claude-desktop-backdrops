@@ -1,11 +1,13 @@
 // Night Crossing: a level crossing at night, drawn on an LED dot lattice.
-// Elements kept from the reference: a near-black green night with fine specks of stars, black letterbox bars above and
-// below, posts striped yellow and black, pairs of round signal lamps (one lit red, one dark), the red glow round a lit
-// lamp, a pale alarm bell, the yellow crossbuck at the top.
+// Elements kept from the reference: a near-black green night with fine specks of stars, posts striped yellow and black,
+// pairs of round signal lamps (one lit red, one dark), the red glow round a lit lamp, a pale alarm bell, the yellow
+// crossbuck at the top.
 // Moved to keep the conversation column clear (x 432..1250 holds only unlit dots): the near side of the crossing stands
 // in the right strip with the big lamps, the bell and the crossbuck; the far side's post and smaller lamps stand in the
 // left strip, so the conversation sits on the road between them. Each lamp's glow stays inside its own strip.
-// Medium: dots only, on a 10-unit lattice (160 by 50 rows of 100). Every surface is cells filled with a dot pattern; a
+// Left out on purpose: the reference's black letterbox bars belong to the film's frame, not the scene; drawn into a
+// backdrop they cut the picture down to a band across the middle of the window.
+// Medium: dots only, on a 10-unit lattice (160 by 100). Every surface is cells filled with a dot pattern; a
 // lit dot carries its own small halo; the glow round a lamp is rings of smaller and dimmer dots.
 // Motion: the lamps flash left and right in turn, as a crossing's do; the bell sends rings of dots out as it rings;
 // stars twinkle. Lamps switch with `visibility`, in steps, so most frames paint nothing. No filters, no masks.
@@ -14,8 +16,8 @@
 const PITCH = 10
 const COLS = 160
 const ROWS = 100
-const TOP = 12 // letterbox rows above
-const BOTTOM = 88 // letterbox from this row down
+const TOP = 0
+const BOTTOM = ROWS
 
 const LEFT_FROM = 21 // left strip, columns 21..43
 const LEFT_TO = 43
@@ -272,8 +274,7 @@ export function nightCrossingSvg(): string {
   built =
     `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${COLS * PITCH} ${ROWS * PITCH}" width="100%" height="100%" preserveAspectRatio="xMidYMid slice">` +
     `<style>${STYLE}</style><defs>${DEFS}</defs>` +
-    `<rect x="-40" y="-40" width="${COLS * PITCH + 80}" height="${ROWS * PITCH + 80}" fill="#030504"/>` +
-    `<rect x="-40" y="${TOP * PITCH}" width="${COLS * PITCH + 80}" height="${(BOTTOM - TOP) * PITCH}" fill="#080d0a"/>` +
+    `<rect x="-40" y="-40" width="${COLS * PITCH + 80}" height="${ROWS * PITCH + 80}" fill="#080d0a"/>` +
     scene +
     `</svg>`
   return built
