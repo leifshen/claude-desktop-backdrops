@@ -6,9 +6,9 @@ Animated backdrops for the Claude desktop app (Code tab): scenes that move slowl
 
 > 非官方作品，與 Anthropic 無關。Unofficial; not affiliated with or endorsed by Anthropic.
 
-| `/backdrop noon` 白晝中庭 Atrium Noon | `/backdrop moon` 月之圓窗 Moon Window |
-|---|---|
-| ![Atrium Noon: a tiled glass atrium in light mode](docs/noon.jpg) | ![Moon Window: a cut-paper round window in dark mode](docs/moon.jpg) |
+| `/backdrop noon` 白晝中庭 Atrium Noon | `/backdrop moon` 月之圓窗 Moon Window | `/backdrop crossing` 夜之平交道 Night Crossing |
+|---|---|---|
+| ![Atrium Noon: a tiled glass atrium in light mode](docs/noon.jpg) | ![Moon Window: a cut-paper round window in dark mode](docs/moon.jpg) | ![Night Crossing: an LED dot-matrix level crossing in dark mode](docs/crossing.jpg) |
 
 [中文](#中文) · [English](#english)
 
@@ -20,9 +20,10 @@ Animated backdrops for the Claude desktop app (Code tab): scenes that move slowl
 
 一個 Claude Code plugin，裡面有三樣東西：
 
-1. **兩個做好的動態背景**
+1. **三個做好的動態背景**，方塊、剪紙、點陣各一
    - **白晝中庭**（淺色，方塊）：過曝的玻璃中庭。走道中段被正午的光吃掉，左邊留一段走道，右邊是往下的樓梯。金色光帶掃過窗格、玻璃反光、紙片一格一格翻落。
    - **月之圓窗**（深色，剪紙）：右側的大圓窗、綠色夜空與滿月、裂紋般的鐵窗花和會眨眼的眼睛。光暈的紙層緩慢縮放、星星閃爍、紙片輕擺。
+   - **夜之平交道**（深色，點陣）：像 LED 看板一樣用點畫成的夜間平交道，兩側各一根黃黑柱子，對話欄正好是中間的路。紅燈左右交替閃、警鈴響起時有一圈圈的點擴散、星星閃爍。
 2. **`/backdrop` 指令**：切換、關閉背景，會記住你上次的選擇，之後新開的對話自動套用。
 3. **`new-backdrop` skill**：給 Claude 一張參考圖，說「做一個新的背景」，它會照 [`RULES.md`](RULES.md) 的五條規則設計新場景，並用附的預覽工具檢查。
 
@@ -51,6 +52,7 @@ Animated backdrops for the Claude desktop app (Code tab): scenes that move slowl
 | `/backdrop list` | 列出所有背景，▶ 是目前使用中的 |
 | `/backdrop noon` | 白晝中庭（淺色視窗） |
 | `/backdrop moon` | 月之圓窗（深色視窗） |
+| `/backdrop crossing` | 夜之平交道（深色視窗） |
 | `/backdrop off` | 關閉背景 |
 
 套用後視窗會自動切到該背景對應的淺色或深色。
@@ -85,8 +87,8 @@ claude plugin install desktop-backdrops@leifshen
 
 ### 靈感與致謝
 
-- 兩個場景的靈感來自〈物語〉系列的背景美術。圖是重新繪製的原創場景，沒有使用或描摹原作素材。
-- 做法參考 Anthropic 的 `theme-examples` plugin（Apache-2.0）：剪紙的四層畫法、方塊的格子尺寸、對話欄的留白範圍；場景裡的 `hash` 小函式改寫自其範例。
+- 三個場景的靈感來自〈物語〉系列的背景美術。圖是重新繪製的原創場景，沒有使用或描摹原作素材。
+- 做法參考 Anthropic 的 `theme-examples` plugin（Apache-2.0）：剪紙的四層畫法、方塊的格子尺寸、點陣的點格與自帶光暈的亮點、對話欄的留白範圍；場景裡的 `hash` 小函式改寫自其範例。
 - `hooks/make-colors.js` 來自 Claude Code 內建的 plugin-authoring skill，依其說明原樣附上。
 
 ---
@@ -97,9 +99,10 @@ claude plugin install desktop-backdrops@leifshen
 
 A Claude Code plugin with three parts:
 
-1. **Two animated backdrops**
+1. **Three animated backdrops**, one in each medium: tiles, cut paper, dots
    - **Atrium Noon** (light, tiles): an overexposed glass atrium. The middle of the catwalk is burnt out by the noon light; a stretch of it stands on the left and a staircase goes down on the right. A band of gold light crosses the panes, the glass catches the sun, and sheets of paper tumble down a cell at a time.
    - **Moon Window** (dark, cut paper): a great round window at the right edge, a green night sky and a full moon, crack-like iron tracery with blinking eyes. The paper layers of the glow breathe, stars twinkle, torn patches sway.
+   - **Night Crossing** (dark, dots): a level crossing at night drawn like an LED board, a striped post on each side, so the conversation sits on the road between them. The red lamps flash in turn, rings of dots spread from the bell as it rings, stars twinkle.
 2. **`/backdrop`**: switch or turn off the backdrop. Your last choice carries over to every new session.
 3. **The `new-backdrop` skill**: give Claude a reference image and ask for a new backdrop; it designs the scene by the five rules in [`RULES.md`](RULES.md) and checks it with the bundled preview tool.
 
@@ -128,6 +131,7 @@ Answer `y` to "Add marketplace?" and pick the user scope.
 | `/backdrop list` | List the backdrops; ▶ marks the current one |
 | `/backdrop noon` | Atrium Noon (light window) |
 | `/backdrop moon` | Moon Window (dark window) |
+| `/backdrop crossing` | Night Crossing (dark window) |
 | `/backdrop off` | Turn the backdrop off |
 
 The window switches to the light or dark mode each backdrop is made for.
@@ -162,8 +166,8 @@ The five rules in short:
 
 ### Credits
 
-- Both scenes are inspired by the background art of the *Monogatari* series. They are original scenes, redrawn; no artwork from the series is used or traced.
-- Techniques learned from Anthropic's `theme-examples` plugin (Apache-2.0): the four-pass cut-paper drawing, the tile grid, the clear band for the conversation; the scenes' small `hash` helper is adapted from it.
+- All three scenes are inspired by the background art of the *Monogatari* series. They are original scenes, redrawn; no artwork from the series is used or traced.
+- Techniques learned from Anthropic's `theme-examples` plugin (Apache-2.0): the four-pass cut-paper drawing, the tile grid, the dot lattice and its haloed lit dots, the clear band for the conversation; the scenes' small `hash` helper is adapted from it.
 - `hooks/make-colors.js` comes from Claude Code's built-in plugin-authoring skill and ships unchanged, as it instructs.
 
 ## License

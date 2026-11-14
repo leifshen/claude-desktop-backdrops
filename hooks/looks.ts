@@ -3,6 +3,7 @@
 
 import type { ThemeSetArgs } from 'claude-code'
 
+import { nightCrossingSvg } from './crossing'
 import { makeColors } from './make-colors.js'
 import { moonWindowSvg } from './moon'
 import { atriumNoonSvg } from './scene'
@@ -59,6 +60,25 @@ const moonColors = makeColors({
   },
 })
 
+const crossingColors = makeColors({
+  label: 'Night Crossing',
+  only: 'dark',
+  roles: { accent: '#d8b24a', danger: '#e5484d', success: '#7fbf6a', warning: '#e08a2e', pro: '#a58bd6' },
+  dark: {
+    gray: {
+      anchors: {
+        'surface-0': '#0b100d',
+        'surface-1': '#111813',
+        'surface-2': '#162019',
+        'surface-3': '#1a251d',
+        'text-primary': '#e8ede4',
+        'text-secondary': '#c1cbbd',
+        'text-muted': '#97a493',
+      },
+    },
+  },
+})
+
 export const LOOKS: Look[] = [
   {
     key: 'noon',
@@ -81,6 +101,17 @@ export const LOOKS: Look[] = [
     glass: { blur: 14, tint: '#0c120f', opacity: 0.55 },
     svg: moonWindowSvg,
     alt: 'A cut-paper round window at the right edge: a green night sky, a full moon, black crack-like tracery with almond eyes',
+  },
+  {
+    key: 'crossing',
+    scene: 'night-crossing',
+    title: '夜之平交道 Night Crossing',
+    blurb: '點陣・平交道紅燈 / Dots: a level crossing at night, red lamps flashing in turn, a ringing bell',
+    window: 'dark',
+    colors: crossingColors,
+    glass: { blur: 14, tint: '#0b100d', opacity: 0.55 },
+    svg: nightCrossingSvg,
+    alt: 'An LED dot-matrix level crossing at night: striped posts, a crossbuck, a bell, and red lamps flashing in turn on both sides',
   },
 ]
 
