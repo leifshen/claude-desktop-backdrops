@@ -78,10 +78,21 @@ claude plugin install desktop-backdrops@leifshen
 4. **動態要慢、要看得見**：淺色場景不用白色做動態。
 5. **技術雷**：SVG 不能用 `<filter>`（桌面版會吃掉，整張圖消失）。
 
+### 私人背景
+
+用別人的作品做的背景（例如動畫截圖描成的場景）只能自己用，不該放上公開的 repository。把它放在 plugin 資料夾裡的 `private/`：
+
+- `private/looks.json` 列出私人背景（格式和 `hooks/looks.ts` 的欄位相同，SVG 寫成檔名）。
+- 每個背景的 SVG 檔放在 `private/` 底下。
+- `private/` 已列在 `.gitignore`，不會被提交。`/backdrop list` 照樣列得出來。
+
+`tools/trace.py` 可以把平塗的圖（動畫畫面、海報）描成向量色塊，給背景用；人物那一塊可以另外用更高解析度細描。描出來的是向量，所以背景照樣能動。
+
 ### 常見問題
 
 - **開新對話時沒有背景**：桌面版要等你送出第一則訊息才真正啟動對話，背景會在那之後出現。
-- **換了配色卻沒有圖**：場景用了 `<filter>`，或 app 版本太舊。`/backdrop` 的回覆會說視窗有沒有畫出來。
+- **換了配色卻沒有圖**：場景用了 `<filter>`，或 app 版本太舊。
+- **背景完全不動**：場景裡嵌入了點陣圖（`<image>`），app 會把整張背景當成靜態圖畫。改用向量。`/backdrop` 的回覆會說視窗有沒有畫出來。
 - **背景被別的主題蓋掉**：Anthropic 的 `/custom-theme` 在某專案套過主題時，每回合會重新套用。先打 `/custom-theme off`。
 - **完全不動**：系統開了「減少動態」，場景會刻意停住。
 
@@ -157,10 +168,21 @@ The five rules in short:
 4. **Slow, visible motion**: never animate in white on a light scene.
 5. **Pitfalls**: no `<filter>` in the SVG (the app drops it and the whole picture with it).
 
+### Private backdrops
+
+A backdrop made from someone else's artwork (a traced anime frame, say) is for your own use and does not belong in a public repository. Keep it in the plugin folder's `private/`:
+
+- `private/looks.json` lists your private backdrops (the fields of `hooks/looks.ts`, with the SVG given as a file name).
+- Each backdrop's SVG file sits under `private/`.
+- `private/` is in `.gitignore`, so it is never committed. `/backdrop list` shows them all the same.
+
+`tools/trace.py` traces a flat-coloured picture (an anime frame, a poster) into vector colour regions for a backdrop, with an optional finer pass over a figure. The result is vector, so the scene can still move.
+
 ### Troubleshooting
 
 - **A new session shows no backdrop**: the desktop app starts the session when you send the first message; the backdrop appears then.
-- **Colours change but no picture**: the scene uses `<filter>`, or the app is too old. `/backdrop` says whether the window draws it.
+- **Colours change but no picture**: the scene uses `<filter>`, or the app is too old.
+- **Nothing moves at all**: the scene embeds a raster `<image>`; the app then draws the whole backdrop as a still picture. Use vector shapes. `/backdrop` says whether the window draws it.
 - **Another theme takes over**: Anthropic's `/custom-theme` re-applies its theme every turn in a project where one was chosen. Run `/custom-theme off`.
 - **Nothing moves**: your system asks for reduced motion, and the scenes rest on purpose.
 
