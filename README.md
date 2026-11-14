@@ -25,7 +25,7 @@ Animated backdrops for the Claude desktop app (Code tab): scenes that move slowl
    - **月之圓窗**（深色，剪紙）：右側的大圓窗、綠色夜空與滿月、裂紋般的鐵窗花和會眨眼的眼睛。光暈的紙層緩慢縮放、星星閃爍、紙片輕擺。
    - **夜之平交道**（深色，點陣）：像 LED 看板一樣用點畫成的夜間平交道，兩側各一根黃黑柱子，對話欄正好是中間的路。紅燈左右交替閃、警鈴響起時有一圈圈的點擴散、星星閃爍。
 2. **`/backdrop` 指令**：切換、關閉背景，會記住你上次的選擇，之後新開的對話自動套用。
-3. **`new-backdrop` skill**：給 Claude 一張參考圖，說「做一個新的背景」，它會照 [`RULES.md`](RULES.md) 的五條規則設計新場景，並用附的預覽工具檢查。
+3. **`new-backdrop` skill**：給 Claude 一張參考圖，說「做一個新的背景」，它會照 [`RULES.md`](RULES.md) 的五條規則，從方塊、剪紙、點陣、色塊四種媒材挑一種設計新場景，並用附的預覽工具檢查。需要像原圖的人物時，可以把圖描成色塊（`tools/trace.py`）。
 
 ### 需要什麼
 
@@ -73,20 +73,22 @@ claude plugin install desktop-backdrops@leifshen
 五條規則的重點：
 
 1. **元素不碰對話欄**：畫面寬度 27%–78% 只留底色，主角放右側，配角放左側。
-2. **一張只用一種媒材**：方塊、剪紙、點陣三選一，連光暈都用這種媒材做。
-3. **忠於參考圖**：認得出來的元素逐項保留，只為了避開對話欄而搬動。
+2. **一張只用一種媒材**：方塊、剪紙、點陣、色塊四選一，連光暈都用這種媒材做。做法可以重新畫，或用描圖工具把圖描成色塊。
+3. **忠於參考圖**：認得出來的元素逐項保留，只為了避開對話欄而搬動。公開或私人看來源：描別人的作品只能自己用。
 4. **動態要慢、要看得見**：淺色場景不用白色做動態。
 5. **技術雷**：SVG 不能用 `<filter>`（桌面版會吃掉，整張圖消失）。
 
-### 私人背景
+### 描圖與私人背景
 
-用別人的作品做的背景（例如動畫截圖描成的場景）只能自己用，不該放上公開的 repository。把它放在 plugin 資料夾裡的 `private/`：
+色塊這種媒材可以用 `tools/trace.py` 把一張圖描成向量色塊，最像原圖，人物也畫得出來。描出來的是向量，所以背景照樣能動。動畫畫面、插畫、海報這類本來就是平塗的圖效果最好；照片會變成色調分離的海報感。
+
+能不能公開，看圖從哪裡來：自己拍的照片、自己畫的圖、可以自由使用的素材，描出來可以分享；別人的作品（例如動畫截圖）描出來只能自己用，不該放上公開的 repository。這類背景放在 plugin 資料夾裡的 `private/`：
 
 - `private/looks.json` 列出私人背景（格式和 `hooks/looks.ts` 的欄位相同，SVG 寫成檔名）。
 - 每個背景的 SVG 檔放在 `private/` 底下。
 - `private/` 已列在 `.gitignore`，不會被提交。`/backdrop list` 照樣列得出來。
 
-`tools/trace.py` 可以把平塗的圖（動畫畫面、海報）描成向量色塊，給背景用；人物那一塊可以另外用更高解析度細描。描出來的是向量，所以背景照樣能動。
+描人物時可以對人物那一塊另外用更高解析度細描（`rois` 設定），讓頭髮、膚色有自己的顏色。
 
 ### 常見問題
 
@@ -115,7 +117,7 @@ A Claude Code plugin with three parts:
    - **Moon Window** (dark, cut paper): a great round window at the right edge, a green night sky and a full moon, crack-like iron tracery with blinking eyes. The paper layers of the glow breathe, stars twinkle, torn patches sway.
    - **Night Crossing** (dark, dots): a level crossing at night drawn like an LED board, a striped post on each side, so the conversation sits on the road between them. The red lamps flash in turn, rings of dots spread from the bell as it rings, stars twinkle.
 2. **`/backdrop`**: switch or turn off the backdrop. Your last choice carries over to every new session.
-3. **The `new-backdrop` skill**: give Claude a reference image and ask for a new backdrop; it designs the scene by the five rules in [`RULES.md`](RULES.md) and checks it with the bundled preview tool.
+3. **The `new-backdrop` skill**: give Claude a reference image and ask for a new backdrop; it designs the scene by the five rules in [`RULES.md`](RULES.md), in one of four media (tiles, cut paper, dots, flat colour), and checks it with the bundled preview tool. For a figure that has to look like the picture, it can trace the picture into flat colour (`tools/trace.py`).
 
 ### Requirements
 
@@ -163,20 +165,22 @@ Then, in the desktop app, attach a reference image and ask for a new backdrop. C
 The five rules in short:
 
 1. **Keep clear of the conversation**: 27%–78% of the width holds only the ground; the subject goes right, supporting pieces left.
-2. **One medium per scene**: tiles, cut paper or dots, glow included.
-3. **Stay true to the reference**: keep every recognisable element; move things only to clear the conversation.
+2. **One medium per scene**: tiles, cut paper, dots or flat colour, glow included. Redraw in it, or trace a picture into flat colour.
+3. **Stay true to the reference**: keep every recognisable element; move things only to clear the conversation. Public or private depends on the source: a trace of someone else's artwork is for your own use.
 4. **Slow, visible motion**: never animate in white on a light scene.
 5. **Pitfalls**: no `<filter>` in the SVG (the app drops it and the whole picture with it).
 
-### Private backdrops
+### Tracing and private backdrops
 
-A backdrop made from someone else's artwork (a traced anime frame, say) is for your own use and does not belong in a public repository. Keep it in the plugin folder's `private/`:
+The flat colour medium can trace a picture into vector colour regions with `tools/trace.py`: the closest to the picture, figures included. The result is vector, so the scene still moves. Art that is flat to begin with (animation, illustration, posters) traces best; a photo comes out posterised.
+
+Whether it may be shared depends on where the picture comes from: your own photo or drawing, or material free to use, may be traced and shared; someone else's artwork (an anime frame, say) traced is for your own use and does not belong in a public repository. Keep such backdrops in the plugin folder's `private/`:
 
 - `private/looks.json` lists your private backdrops (the fields of `hooks/looks.ts`, with the SVG given as a file name).
 - Each backdrop's SVG file sits under `private/`.
 - `private/` is in `.gitignore`, so it is never committed. `/backdrop list` shows them all the same.
 
-`tools/trace.py` traces a flat-coloured picture (an anime frame, a poster) into vector colour regions for a backdrop, with an optional finer pass over a figure. The result is vector, so the scene can still move.
+For a figure, a finer pass over its area (the `rois` setting) gives hair and skin colours of their own.
 
 ### Troubleshooting
 
