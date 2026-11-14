@@ -85,14 +85,33 @@ function listText(current: string | undefined): string {
   return ['背景 Backdrops:', ...rows, '', '/backdrop <name> 套用 apply · /backdrop off 關閉 off · /backdrop list 列出 list'].join('\n')
 }
 
-async function apply($: EngineInterface, look: Look): Promise<string> {
+/** What `/backdrop` says after a set, and whether that is a problem worth a toast at session start. */
+type Said = { text: string; isProblem: boolean }
+
+async function apply($: EngineInterface, look: Look): Promise<Said> {
   const unpainted = look.colors.problems.find(line => line.startsWith("Desktop won't paint"))
   if (unpainted !== undefined) {
-    return `${look.title}: ${unpainted}`
+    return { text: `${look.title}: ${unpainted}`, isProblem: true }
   }
   const set = await $.theme.set(themeOf({ ...look, scene: sceneId(look) }))
   await $.store.set(CHOICE_KEY, look.key)
-  return set.isDrawn ? `已套用 Applied: ${look.title}` : `${look.title}: set, but this window says it draws no theme: ${set.reason}`
+  const applied = `已套用 Applied: ${look.title}`
+  if (set.isDrawn) {
+    return { text: applied, isProblem: false }
+  }
+  // Not drawn yet. The theme stands either way and draws once an app window that draws themes attaches. In a new
+  // desktop session that is the usual case for its first message: the window joins a moment later and draws it, so
+  // say nothing more. (The window may even be on the roster already, joined by its first ask to draw, before it
+  // declares that it draws themes.) Only the terminal and VS Code, with no app window beside them, never draw it.
+  const surfaces = await $.session.surfaces()
+  const noApp = surfaces.length > 0 && surfaces.every(s => s === 'terminal' || s === 'vscode')
+  if (noApp) {
+    return {
+      text: `${applied}\n終端機和 VS Code 不畫背景，在桌面版開對話就看得到。\nThe terminal and VS Code draw no backdrop; a session in the desktop app shows it.`,
+      isProblem: false,
+    }
+  }
+  return { text: applied, isProblem: false }
 }
 
 async function chosen($: EngineInterface): Promise<string | undefined> {
@@ -112,8 +131,8 @@ export const register: Register = on => {
     const look = allLooks().find(l => l.key === key)
     if (look !== undefined) {
       const said = await apply($, look)
-      if (!said.startsWith('已套用 Applied')) {
-        $.ui.toast(said)
+      if (said.isProblem) {
+        $.ui.toast(said.text)
       }
     }
     return next(e)
@@ -137,7 +156,7 @@ export const register: Register = on => {
     if (look === undefined) {
       return { text: `沒有這個背景 No backdrop called "${arg}".\n\n${listText(current)}` }
     }
-    return { text: await apply($, look) }
+    return { text: (await apply($, look)).text }
   })
 
   on('ui.render', { component: 'Backdrop' }, ($, e, next) => {
