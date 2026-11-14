@@ -91,8 +91,8 @@ claude plugin install desktop-backdrops@leifshen
 ### 常見問題
 
 - **開新對話時沒有背景**：桌面版要等你送出第一則訊息才真正啟動對話，背景會在那之後出現。
-- **換了配色卻沒有圖**：場景用了 `<filter>`，或 app 版本太舊。
-- **背景完全不動**：場景裡嵌入了點陣圖（`<image>`），app 會把整張背景當成靜態圖畫。改用向量。`/backdrop` 的回覆會說視窗有沒有畫出來。
+- **換了配色卻沒有圖**：場景用了 `<filter>`，或 app 版本太舊。`/backdrop` 的回覆會說視窗有沒有畫出來。
+- **背景完全不動**：場景裡嵌入了點陣圖（`<image>`），app 會把整張背景當成靜態圖畫。改用向量。
 - **背景被別的主題蓋掉**：Anthropic 的 `/custom-theme` 在某專案套過主題時，每回合會重新套用。先打 `/custom-theme off`。
 - **完全不動**：系統開了「減少動態」，場景會刻意停住。
 
@@ -181,8 +181,8 @@ A backdrop made from someone else's artwork (a traced anime frame, say) is for y
 ### Troubleshooting
 
 - **A new session shows no backdrop**: the desktop app starts the session when you send the first message; the backdrop appears then.
-- **Colours change but no picture**: the scene uses `<filter>`, or the app is too old.
-- **Nothing moves at all**: the scene embeds a raster `<image>`; the app then draws the whole backdrop as a still picture. Use vector shapes. `/backdrop` says whether the window draws it.
+- **Colours change but no picture**: the scene uses `<filter>`, or the app is too old. `/backdrop` says whether the window draws it.
+- **Nothing moves at all**: the scene embeds a raster `<image>`; the app then draws the whole backdrop as a still picture. Use vector shapes.
 - **Another theme takes over**: Anthropic's `/custom-theme` re-applies its theme every turn in a project where one was chosen. Run `/custom-theme off`.
 - **Nothing moves**: your system asks for reduced motion, and the scenes rest on purpose.
 
