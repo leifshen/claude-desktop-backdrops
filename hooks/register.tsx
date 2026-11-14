@@ -37,6 +37,23 @@ type PrivateEntry = {
 
 let privateLooks: Look[] = []
 
+/**
+ * The scene's name as the app sees it: the look's name plus a short fingerprint of its drawing. The app keeps what
+ * it drew for a scene name, so a changed drawing under the same name never shows; a new name makes it draw again.
+ */
+const ids = new Map<string, string>()
+function sceneId(look: Look): string {
+  let id = ids.get(look.key)
+  if (id === undefined) {
+    const svg = svgOf(look)
+    let h = 5381
+    for (let i = 0; i < svg.length; i += 1) h = ((h * 33) ^ svg.charCodeAt(i)) >>> 0
+    id = `${look.scene}-${h.toString(36)}`.slice(0, 64)
+    ids.set(look.key, id)
+  }
+  return id
+}
+
 async function loadPrivate($: EngineInterface): Promise<void> {
   try {
     const root = `${$.plugin.root}/private`
@@ -53,6 +70,7 @@ async function loadPrivate($: EngineInterface): Promise<void> {
       } as Parameters<typeof makeColors>[0])
       out.push({ key: p.key, scene: p.scene, title: p.title, blurb: p.blurb, window: p.window, colors, glass: p.glass, svg: () => svg, alt: p.alt })
       cache.delete(p.key)
+      ids.delete(p.key)
     }
     privateLooks = out
   } catch {
@@ -72,7 +90,7 @@ async function apply($: EngineInterface, look: Look): Promise<string> {
   if (unpainted !== undefined) {
     return `${look.title}: ${unpainted}`
   }
-  const set = await $.theme.set(themeOf(look))
+  const set = await $.theme.set(themeOf({ ...look, scene: sceneId(look) }))
   await $.store.set(CHOICE_KEY, look.key)
   return set.isDrawn ? `已套用 Applied: ${look.title}` : `${look.title}: set, but this window says it draws no theme: ${set.reason}`
 }
@@ -125,7 +143,7 @@ export const register: Register = on => {
   on('ui.render', { component: 'Backdrop' }, ($, e, next) => {
     const props = e.props as { scene?: unknown; id?: unknown }
     const name = typeof props.scene === 'string' ? props.scene : typeof props.id === 'string' ? props.id : undefined
-    const look = allLooks().find(l => l.scene === name)
+    const look = allLooks().find(l => sceneId(l) === name || l.scene === name)
 
     // Match on the scene's own name, not the plugin's: a copy loaded from a dev folder carries another plugin name.
     if (look === undefined || (e.surface !== 'desktop' && e.surface !== 'mobile')) {
