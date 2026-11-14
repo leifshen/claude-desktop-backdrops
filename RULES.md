@@ -45,10 +45,12 @@ No free-hand vector illustration, and no AI-generated picture pixelated into a s
 - 動手前先列出參考圖裡**認得出來的元素**和主要配色，每一項都要在成品裡找得到。
 - 只為了遵守第 1 條而調整構圖，並說明搬了什麼。
 - 不照描原作的角色、標誌；取元素與氛圍。
+- 參考圖本身的框不算元素：電影黑邊、字幕、浮水印都不畫。黑邊畫進背景，圖會只剩中間一條。
 
 - Before drawing, list the reference's **recognisable elements** and main colours; every one of them must be findable in the scene.
 - Change the composition only to satisfy rule 1, and say what moved.
 - Never trace characters, logos or artwork: take the elements and the mood.
+- The reference's own frame is not an element: leave out letterbox bars, subtitles and watermarks. Bars drawn into a backdrop cut the picture down to a band across the middle.
 
 ## 4. 動態 · Motion
 
