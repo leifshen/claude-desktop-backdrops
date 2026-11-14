@@ -13,6 +13,7 @@ These five rules came out of drafts that failed and the versions that fixed them
 - **右區 x 1250–1600**：放主角，可以超出畫面右緣。
 - **左區 x 210–432**：放配角。
 - **側欄底下 x 0–210**：側欄是毛玻璃，只放大塊、簡單、低對比的形狀。
+- **看得到的範圍**：常見視窗比例下，畫面左右各被裁掉約 30，側欄的毛玻璃蓋到 x≈233。會動的東西放在 233–432 和 1250–1570，放在側欄底下的動態幾乎看不到。
 - 官方範例 Paper Garden 讓 x 432–1200 留空；在常見視窗寬度下，對話欄量起來大約到 78%，所以右界放寬到 1250。
 
 - Canvas: `viewBox="0 0 1600 1000"`, `preserveAspectRatio="xMidYMid slice"`.
@@ -20,6 +21,7 @@ These five rules came out of drafts that failed and the versions that fixed them
 - **Right strip x 1250–1600**: the subject. It may run off the right edge.
 - **Left strip x 210–432**: supporting pieces.
 - **Under the sidebar x 0–210**: the sidebar is frosted glass; only large, simple, low-contrast shapes.
+- **What is actually seen**: at common window sizes about 30 is cropped off each side and the sidebar's glass reaches x ≈ 233. Put motion within 233–432 and 1250–1570; motion under the sidebar is all but invisible.
 - Anthropic's Paper Garden example keeps x 432–1200 clear; measured at common window sizes the conversation column runs to about 78%, hence 1250.
 
 ## 2. 一張只用一種受限媒材 · One constrained medium per scene

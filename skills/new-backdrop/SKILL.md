@@ -44,7 +44,7 @@ The plugin must be read from a folder the person owns, or edits never reach the 
    node tools/preview.mts hooks/<name>.ts <export name> <light|dark> <out folder>
    ```
    It writes `scene.png` (the whole scene) and `mock.png` (a sidebar and the conversation column drawn over it), and flags a scene that is too long or uses `<filter>` or `<mask>`. Look at both images: nothing with contrast inside the dashed box, every listed element present.
-2. Play the motion in a real browser (screenshots taken headless do not advance CSS animation): serve the out folder with `python3 -m http.server` and open `scene.svg`, in Claude's built-in browser pane if there is one. Watch long enough for every motion to come round.
+2. Play the motion in a real browser (screenshots taken headless do not advance CSS animation): serve the out folder with `python3 -m http.server` and open `mock.html`, in Claude's built-in browser pane if there is one, at a window about 1.54 wide to 1 high. It shows the sidebar's glass and the conversation column over the scene, as the app does: motion hidden under the sidebar or too faint there is motion the person will not see. Watch long enough for every motion to come round.
 3. `claude plugin validate <plugin folder>`. An older terminal build may warn "no component is named Backdrop"; the app's own engine has it.
 4. Ask the person to type `/reload-plugins`, then `/backdrop <key>`. It is done once they have seen it in the app.
 
