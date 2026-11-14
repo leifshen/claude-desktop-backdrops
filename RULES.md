@@ -69,9 +69,11 @@ No free-hand vector illustration, and no AI-generated picture pixelated into a s
 - 不用 `<filter>`：桌面版會吃掉它，被它包住的整組圖直接消失（配色有換、圖不見）。也不用 mask；避免對動畫群組設透明度。
 - `$.theme.set` 的 backdrop 同時寫 `scene` 和 `id`（新版讀 scene、舊版讀 id）。
 - SVG 字串小於 131,072 字元。
+- 不嵌入點陣圖（`<image>` 放 JPEG／PNG）：圖會畫出來，但整張背景的動畫會全部停住。要用照片就做成靜態背景（`$.theme.set` 的 `{ image }`）。
 - 在 app 裡實際看過才算完成。
 
 - No `<filter>`: the desktop app drops it, and everything inside it vanishes (the colours change, the picture never shows). No masks either, and no opacity on animated groups.
 - Give the backdrop both `scene` and `id` in `$.theme.set` (newer apps read `scene`, older ones `id`).
 - Keep the SVG under 131,072 characters.
+- No embedded raster (`<image>` with a JPEG or PNG): the picture draws, but every animation in the scene stops. For a photo, use a still backdrop (`{ image }` in `$.theme.set`).
 - It is done only once seen in the app.
