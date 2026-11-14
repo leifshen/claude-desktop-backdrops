@@ -1,0 +1,22 @@
+{
+  "name": "desktop-backdrops",
+  "version": "0.3.0",
+  "description": "Animated backdrops behind the chat in the Claude desktop app (Code tab): a tiled noon atrium and a cut-paper moon window, switched with /backdrop, plus a skill that has Claude design new ones from a reference image by a set of rules. Unofficial; not affiliated with Anthropic.",
+  "author": {
+    "name": "Leif Shen",
+    "url": "https://github.com/leifshen"
+  },
+  "homepage": "https://github.com/leifshen/claude-desktop-backdrops",
+  "repository": "https://github.com/leifshen/claude-desktop-backdrops",
+  "license": "MIT",
+  "keywords": [
+    "claude",
+    "claude-code",
+    "claude-desktop",
+    "claude-code-plugin",
+    "theme",
+    "backdrop",
+    "animated-background",
+    "svg"
+  ]
+}

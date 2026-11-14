@@ -1,0 +1,6 @@
+{
+  "name": "leifshen",
+  "owner": { "name": "Leif Shen" },
+  "metadata": { "description": "Animated backdrops for the Claude desktop app." },
+  "plugins": [{ "name": "desktop-backdrops", "source": "./" }]
+}
