@@ -29,6 +29,7 @@ Animated backdrops for the Claude desktop app (Code tab): scenes that move slowl
 ### 需要什麼
 
 - **Claude 桌面版**的 Code 分頁，而且要是支援背景主題的較新版本。終端機和 VS Code 不會畫背景。
+- 不需要另外安裝 Anthropic 的 `theme-examples` 或其他 plugin，裝這一個就能用。
 - 想自己做新背景的話，還需要 Node.js 和 Google Chrome（給預覽工具用）。
 
 ### 安裝
@@ -77,6 +78,7 @@ claude plugin install desktop-backdrops@leifshen
 
 ### 常見問題
 
+- **開新對話時沒有背景**：桌面版要等你送出第一則訊息才真正啟動對話，背景會在那之後出現。
 - **換了配色卻沒有圖**：場景用了 `<filter>`，或 app 版本太舊。`/backdrop` 的回覆會說視窗有沒有畫出來。
 - **背景被別的主題蓋掉**：Anthropic 的 `/custom-theme` 在某專案套過主題時，每回合會重新套用。先打 `/custom-theme off`。
 - **完全不動**：系統開了「減少動態」，場景會刻意停住。
@@ -104,6 +106,7 @@ A Claude Code plugin with three parts:
 ### Requirements
 
 - The **Claude desktop app**, Code tab, in a recent version that draws backdrops. The terminal and VS Code draw none.
+- Nothing else: Anthropic's `theme-examples` or any other plugin is not needed.
 - To make your own: Node.js and Google Chrome, for the preview tool.
 
 ### Install
@@ -152,6 +155,7 @@ The five rules in short:
 
 ### Troubleshooting
 
+- **A new session shows no backdrop**: the desktop app starts the session when you send the first message; the backdrop appears then.
 - **Colours change but no picture**: the scene uses `<filter>`, or the app is too old. `/backdrop` says whether the window draws it.
 - **Another theme takes over**: Anthropic's `/custom-theme` re-applies its theme every turn in a project where one was chosen. Run `/custom-theme off`.
 - **Nothing moves**: your system asks for reduced motion, and the scenes rest on purpose.
